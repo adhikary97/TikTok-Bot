@@ -8,7 +8,7 @@ import os
 
 
 class TikTokBot:
-    def __init__(self, who_can_view, video_path, date_time):
+    def __init__(self, who_can_view, video_path, date_time, caption):
         path = os.path.dirname(os.path.abspath(__file__))
         self.driver = webdriver.Chrome(f'{path}/chromedriver')
         self.executor_url = self.driver.command_executor._url
@@ -49,7 +49,7 @@ class TikTokBot:
                 time.sleep(2)
 
         # set caption
-        self.driver.find_element_by_xpath('//div[contains(@class, "notranslate public-DraftEditor-content")]').send_keys('Uploaded by a bot #bot #cs #cool')
+        self.driver.find_element_by_xpath('//div[contains(@class, "notranslate public-DraftEditor-content")]').send_keys(caption)
 
         if who_can_view == 'Public':
             self.driver.find_element_by_xpath('//label[contains(text(), "Public")]').click()
@@ -94,8 +94,9 @@ def main():
     parser.add_argument("--privacy", choices=['Private', 'Friends only', 'Public'], help="Private, Friends only, or Public", required=True)
     parser.add_argument("--video_path", help="Absolute path to video, i.e. /Users/username/Downloads/IMG_1648.MOV", required=True)
     parser.add_argument("--date_time", help="Enter date and time you want the video to post, i.e. 2020-07-27 00:48", required=True)
+    parser.add_argument("--caption", help="Enter a caption, i.e. Uploaded by a bot #bot #cs #cool", required=True)
     args = parser.parse_args()
-    TikTokBot(who_can_view=args.privacy, video_path=args.video_path, date_time=args.date_time)
+    TikTokBot(who_can_view=args.privacy, video_path=args.video_path, date_time=args.date_time, caption=args.caption)
 
 
 if __name__ == '__main__':
