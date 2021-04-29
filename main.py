@@ -8,14 +8,15 @@ import os
 
 
 class TikTokBot:
-    def __init__(self, who_can_view, video_path, date_time, caption):
+    def __init__(self):
         path = os.path.dirname(os.path.abspath(__file__))
         self.driver = webdriver.Chrome(f'{path}/chromedriver')
         self.executor_url = self.driver.command_executor._url
         self.session_id = self.driver.session_id
         print(self.executor_url, self.session_id)
-        self.driver.get('https://tiktok.com')
 
+    def upload_video(self, who_can_view, video_path, date_time, caption):
+        self.driver.get('https://tiktok.com')
         while True:
             try:
                 cookies = self.driver.get_cookies()
@@ -71,9 +72,16 @@ class TikTokBot:
                 time.sleep(10)
 
         # check for when to post
-        d, t = date_time.split()
-        y, m, d = d.split('-')
-        hour, minute = t.split(':')
+        if type(date_time) == str:
+            d, t = date_time.split()
+            y, m, d = d.split('-')
+            hour, minute = t.split(':')
+        elif type(date_time) == datetime.datetime:
+            y = date_time.year
+            m = date_time.month
+            d = date_time.day
+            hour = date_time.hour
+            minute = date_time.minute
 
         dt = datetime.datetime(int(y), int(m), int(d), int(hour), int(minute), 0, tzinfo=tzlocal())
         dt.strftime('%X %x %Z')
@@ -96,7 +104,9 @@ def main():
     parser.add_argument("--date_time", help="Enter date and time you want the video to post, i.e. 2020-07-27 00:48", required=True)
     parser.add_argument("--caption", help="Enter a caption, i.e. Uploaded by a bot #bot #cs #cool", required=True)
     args = parser.parse_args()
-    TikTokBot(who_can_view=args.privacy, video_path=args.video_path, date_time=args.date_time, caption=args.caption)
+    bot = TikTokBot()
+    bot.upload_video(who_can_view=args.privacy, video_path=args.video_path, date_time=args.date_time, caption=args.caption)
+
 
 
 if __name__ == '__main__':

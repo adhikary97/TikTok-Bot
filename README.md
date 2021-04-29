@@ -1,7 +1,18 @@
-How to run it? 
-
-Run `python3 main.py -h` or `python3 main.py -help` for help
+## How to run it? 
+ * Install all libs `pip install -r requirements.txt`
+ * Download Chrome Browser
+ * Download [ChromeWebDriver](https://chromedriver.chromium.org/downloads)
+ * Copy ChromeWebDriver to project directory
+ * Run `python3 main.py -h` or `python3 main.py -help` for help
 
 You must put quotes around each argument.
 
-For example: `python3 main.py --privacy 'Public' --video_path '/Users/parasadhikary/Downloads/IMG_1705.MOV' --date_time '2020-07-29 01:38'  --caption 'Uploaded by a bot #bot #cs #cool'`
+### Example: `python3 main.py --privacy 'Public' --video_path '/Users/parasadhikary/Downloads/IMG_1705.MOV' --date_time '2020-07-29 01:38'  --caption 'Uploaded by a bot #bot #cs #cool'`
+
+
+## Available arguments:
+ * privacy - Private, Friends only, or Public - privacy of uploaded video
+ * video_path - absolute filepath to video on your PC
+ * date_time - time, when video should be published (string 2020-02-29 12:22 or datetime.datetime obj.)
+ * caption - uploaded video name
+
